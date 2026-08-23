@@ -1,0 +1,207 @@
+project:
+  company: AJIO
+  market: India
+  business_metric: 'Percentage of users who purchase at least one item from their
+    wishlist within 30 days of adding it.
+
+    '
+  constraint: 'Solutions cannot use monetary incentives (no discounts, coupons, cashback
+    or price-drop offers).
+
+    '
+relevance:
+  keep_if: 'The text describes someone BEFORE they have bought - considering, saving,
+    comparing, hesitating over, or deciding against a fashion product. Look for uncertainty
+    about a future purchase: unsure about size, unsure about quality, waiting for
+    a price drop, cannot decide between options, asking others opinions, or explaining
+    why they did not buy something they liked.'
+  discard_if: 'CRITICAL: Discard anything describing what happened AFTER a purchase.
+    If the person says they ordered, received, returned, or were refunded something,
+    it is NOT relevant, even if they mention size, quality, or photos. Complaints
+    about wrong items delivered, poor quality received, delivery delays, refund problems,
+    app bugs, or customer service are ALL irrelevant. Only keep text about a decision
+    that has not yet been made.'
+blockers:
+- id: price_waiting
+  label: Waiting for a sale or price drop
+  solvable_without_money: false
+- id: price_too_high
+  label: Price feels too high for the item
+  solvable_without_money: false
+- id: price_cheaper_elsewhere
+  label: Found or suspects it is cheaper on another app
+  solvable_without_money: false
+- id: fit_size_unsure
+  label: Unsure which size to order
+  solvable_without_money: true
+- id: fit_body_unsure
+  label: Unsure the item will suit their body or shape
+  solvable_without_money: true
+- id: fit_brand_inconsistent
+  label: Brand sizing feels inconsistent or unreliable
+  solvable_without_money: true
+- id: trust_photos
+  label: Worried the real item will not match the photos
+  solvable_without_money: true
+- id: trust_quality
+  label: Doubts about fabric or build quality
+  solvable_without_money: true
+- id: trust_reviews_thin
+  label: Not enough reviews or photos to judge
+  solvable_without_money: true
+- id: choice_overload
+  label: Too many similar saved items to choose between
+  solvable_without_money: true
+- id: choice_undecided
+  label: Cannot decide which option is best
+  solvable_without_money: true
+- id: forgot
+  label: Saved it and simply forgot
+  solvable_without_money: true
+- id: styling_unsure
+  label: Unsure how to style it or what to pair it with
+  solvable_without_money: true
+- id: occasion_absent
+  label: No occasion to wear it yet
+  solvable_without_money: true
+- id: wardrobe_mismatch
+  label: Does not go with anything they already own
+  solvable_without_money: true
+- id: validation_needed
+  label: Wants someone else's opinion before buying
+  solvable_without_money: true
+- id: validation_self
+  label: Unsure whether it is "them" or their style
+  solvable_without_money: true
+- id: return_hassle
+  label: Worried returning or exchanging will be a hassle
+  solvable_without_money: true
+- id: return_policy_unclear
+  label: Unsure of the return or exchange policy
+  solvable_without_money: true
+- id: stock_size_gone
+  label: Their size sold out
+  solvable_without_money: true
+- id: stock_unavailable
+  label: Item no longer available
+  solvable_without_money: true
+- id: never_intended
+  label: Saved aspirationally, never planned to buy
+  solvable_without_money: false
+- id: bookmarking
+  label: Using the wishlist as a mood board or bookmark
+  solvable_without_money: false
+- id: product_findability
+  label: Wants the item but cannot find or locate it to buy
+  solvable_without_money: true
+- id: other
+  label: Something else not on this list
+  solvable_without_money: null
+save_motivations:
+- id: buy_later_definite
+  label: Wants it, buying later
+- id: price_watching
+  label: Saved to watch for a price drop
+- id: shortlisting
+  label: Shortlisting several options to compare
+- id: outfit_building
+  label: Building an outfit or look
+- id: occasion_planning
+  label: Saving for a specific upcoming occasion
+- id: gifting
+  label: Considering it as a gift
+- id: aspirational
+  label: Aspirational or window shopping
+- id: bookmark_only
+  label: Bookmarking, no purchase intent
+- id: unclear
+  label: Cannot tell from the text
+workarounds:
+- id: asked_friend_family
+  label: Asked a friend, partner or family member
+- id: shared_screenshot
+  label: Shared a screenshot on WhatsApp or Instagram
+- id: checked_other_app
+  label: Checked the same or similar item on another app
+- id: searched_reviews_online
+  label: Searched for reviews outside the app
+- id: watched_video
+  label: Watched a haul, review or try-on video
+- id: checked_size_chart
+  label: Consulted a size chart or measured themselves
+- id: visited_store
+  label: Went to a physical store to see or try it
+- id: ordered_multiple_sizes
+  label: Ordered more than one size intending to return
+- id: waited_for_sale
+  label: Waited for a sale event
+- id: none_mentioned
+  label: No workaround mentioned
+comparison_behaviours:
+- id: across_apps
+  label: Compared the same item across different apps
+- id: within_wishlist
+  label: Compared several items inside their own wishlist
+- id: asked_someone
+  label: Asked another person to help choose
+- id: read_reviews
+  label: Compared using reviews or ratings
+- id: compared_price
+  label: Compared on price alone
+- id: no_comparison
+  label: No comparison mentioned
+intent_types:
+- id: genuine_intent
+  label: Genuinely intends to buy
+- id: conditional_intent
+  label: Will buy if a condition is met (price, size, occasion)
+- id: bookmark
+  label: Bookmarking or browsing, little real intent
+- id: unclear
+  label: Cannot tell from the text
+severities:
+- id: abandoned
+  label: Did not buy, gave up on it
+  weight: 3
+- id: delayed
+  label: Still undecided or postponed
+  weight: 2
+- id: bought_eventually
+  label: Bought it in the end
+  weight: 1
+- id: unclear
+  label: Cannot tell from the text
+  weight: 1
+segments:
+  gender:
+  - woman
+  - man
+  - unknown
+  category:
+  - western_wear
+  - ethnic_occasion_wear
+  - footwear
+  - accessories
+  - personal_care
+  - activewear
+  - unknown
+  price_band:
+  - under_1000
+  - 10002500
+  - 25005000
+  - above_5000
+  - unknown
+  age_band:
+  - under_25
+  - 2534
+  - 35_plus
+  - unknown
+scoring:
+  formula: frequency_share * average_severity * addressable_multiplier
+  addressable_multiplier:
+    solvable_without_money_true: 1.0
+    solvable_without_money_false: 0.2
+  note: "Blockers that can only be solved with discounts are heavily down-weighted\
+    \ because the brief forbids monetary incentives. They are still counted and reported\
+    \ \u2014 knowing how large that bucket is, and consciously routing around it,\
+    \ is itself a finding.\n"
