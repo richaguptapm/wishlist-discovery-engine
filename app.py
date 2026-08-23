@@ -29,6 +29,14 @@ st.markdown(
     f"""
     <style>
       .stApp {{ background: #FAFAF8; }}
+      body, .stApp, .block-container {{ color: {INK}; }}
+      [data-testid="stDataFrame"] {{ background:#FFF; border:1px solid {LINE}; border-radius:8px; }}
+      [data-testid="stDataFrame"] * {{ color: {INK} !important; }}
+      [data-testid="stDataFrame"] thead th {{ background:#EEF3F9 !important; font-weight:600; }}
+      .stTabs [data-baseweb="tab-list"] {{ gap: 1.5rem; }}
+      .stTabs [data-baseweb="tab"] {{ color: {MUTED}; }}
+      .bigtitle {{ font-size:2.1rem; font-weight:700; color:{INK}; line-height:1.15;
+                   letter-spacing:-0.02em; margin:0.1rem 0 0.6rem 0; }}
       h1, h2, h3 {{ color: {INK}; letter-spacing: -0.01em; }}
       .eyebrow {{
         font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.12em;
@@ -112,7 +120,7 @@ rel["cluster"] = rel["blocker"].apply(cluster_of)
 # ----------------------------------------------------------------------
 
 st.markdown('<div class="eyebrow">AJIO · Growth · Discovery Engine</div>', unsafe_allow_html=True)
-st.title("Why wishlisted fashion items never get bought")
+st.markdown('<div class="bigtitle">Why wishlisted fashion items never get bought</div>', unsafe_allow_html=True)
 st.markdown(
     f"<p class='note'>An AI pipeline that reads public conversation about online fashion shopping "
     f"in India and codes every item against a fixed taxonomy, so opportunity areas can be counted "
@@ -171,10 +179,11 @@ with tab1:
         fig.update_layout(
             title="Type of intent behind a saved item",
             height=280,
-            margin=dict(l=0, r=40, t=40, b=0),
+            margin=dict(l=0, r=20, t=40, b=0),
             plot_bgcolor="white",
             paper_bgcolor="rgba(0,0,0,0)",
-            xaxis=dict(showgrid=True, gridcolor=LINE, title="Mentions"),
+            xaxis=dict(showgrid=True, gridcolor=LINE, title="Mentions",
+                       range=[0, int(intent.values.max() * 1.35)]),
             yaxis=dict(autorange="reversed"),
             font=dict(color=INK, size=12),
         )
@@ -201,10 +210,11 @@ with tab1:
         fig.update_layout(
             title="How the hesitation resolved",
             height=280,
-            margin=dict(l=0, r=40, t=40, b=0),
+            margin=dict(l=0, r=20, t=40, b=0),
             plot_bgcolor="white",
             paper_bgcolor="rgba(0,0,0,0)",
-            xaxis=dict(showgrid=True, gridcolor=LINE, title="Mentions"),
+            xaxis=dict(showgrid=True, gridcolor=LINE, title="Mentions",
+                       range=[0, int(sev.values.max() * 1.35)]),
             yaxis=dict(autorange="reversed"),
             font=dict(color=INK, size=12),
         )
@@ -265,10 +275,11 @@ with tab1:
     )
     fig.update_layout(
         height=430,
-        margin=dict(l=0, r=180, t=10, b=0),
+        margin=dict(l=0, r=40, t=10, b=0),
         plot_bgcolor="white",
         paper_bgcolor="rgba(0,0,0,0)",
-        xaxis=dict(showgrid=True, gridcolor=LINE, title="Mentions"),
+        xaxis=dict(showgrid=True, gridcolor=LINE, title="Mentions",
+                   range=[0, opp["Mentions"].max() * 1.75]),
         yaxis=dict(autorange="reversed"),
         font=dict(color=INK, size=12),
         showlegend=False,
@@ -282,7 +293,8 @@ with tab1:
 
     st.dataframe(
         opp.style.format(
-            {"Share": "{:.1%}", "Abandonment rate": "{:.1%}"}
+            {"Share": "{:.1%}", "Abandonment rate": "{:.1%}",
+             "Opportunity score": "{:.1f}", "Mentions": "{:,.0f}"}
         ),
         use_container_width=True,
         hide_index=True,
