@@ -618,13 +618,11 @@ haul videos. No AI at this stage.
 Only 8% were. The rest are delivery and refund complaints.
 
 **3 · Code** — Every surviving item gets tagged against a fixed list of reasons. The same list,
-every time. Anything it cannot place goes in an `other` bucket, which I read — that is how the
-findability blocker was found, and why the whole corpus was run again.
+every time. 
 
 **4 · Count** — Now I can rank. Which reason is biggest, and does fixing it need money.
 
-**5 · Serve** — This app: the findings, the coded evidence behind every number, and a box where
-anyone can paste a review and watch it get tagged.
+**5 · Serve** — This app: the findings, and the coded evidence behind every number.
         """
     )
 
