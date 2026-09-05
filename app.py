@@ -36,6 +36,7 @@ st.markdown(
       .stTabs [data-baseweb="tab-list"] {{ gap: 1.5rem; }}
       .stTabs [data-baseweb="tab"] {{ color: {MUTED}; }}
       .stTabs [data-baseweb="tab"] p {{ font-size: 1.05rem !important; font-weight: 600; }}
+      .stTabs [aria-selected="true"] p {{ color: {INK} !important; }}
       .bigtitle {{ font-size:2.1rem; font-weight:700; color:{INK}; line-height:1.15;
                    letter-spacing:-0.02em; margin:0.1rem 0 0.6rem 0; }}
       h1, h2, h3 {{ color: {INK}; letter-spacing: -0.01em; }}
@@ -488,12 +489,28 @@ ITEM:
 {text}"""
 
                     client = genai.Client(api_key=api_key)
-                    resp = client.models.generate_content(
-                        model="gemini-3.5-flash-lite",
-                        contents=prompt,
-                        config={"response_mime_type": "application/json"},
-                    )
+                    models_to_try = [
+                        "gemini-3.5-flash-lite",
+                        "gemini-3.5-flash",
+                        "gemini-2.5-flash",
+                        "gemini-2.0-flash",
+                    ]
+                    resp, used, errs = None, None, []
+                    for m in models_to_try:
+                        try:
+                            resp = client.models.generate_content(
+                                model=m,
+                                contents=prompt,
+                                config={"response_mime_type": "application/json"},
+                            )
+                            used = m
+                            break
+                        except Exception as me:
+                            errs.append(f"{m}: {str(me)[:90]}")
+                    if resp is None:
+                        raise RuntimeError(" | ".join(errs))
                     out = json.loads(resp.text)
+                    st.caption(f"Classified with {used}")
 
                     is_rel = str(out.get("relevant")).lower() == "true"
                     if is_rel:
@@ -595,8 +612,8 @@ with tab4:
 (AJIO, Myntra) and from YouTube comment threads on haul, review and try-on videos.
 No AI at this stage.
 
-**2 · Read and code** — Every item goes to Gemini in batches with one prompt built from the
-taxonomy file. The model answers the same fixed set of questions about each item: is this
+**2 · Read and code** — Every item goes to a model in batches with one prompt built from the
+taxonomy file. Only about 8% are consideration-stage; the rest are delivery and refund complaints. The model answers the same fixed set of questions about each item: is this
 someone hesitating before a purchase, and if so what is blocking them, what did they do about
 it, was it real intent, how did it resolve, and who are they. Every answer comes from a closed
 list, which is what makes the results countable.
