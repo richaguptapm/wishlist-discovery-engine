@@ -35,6 +35,7 @@ st.markdown(
       [data-testid="stDataFrame"] thead th {{ background:#EEF3F9 !important; font-weight:600; }}
       .stTabs [data-baseweb="tab-list"] {{ gap: 1.5rem; }}
       .stTabs [data-baseweb="tab"] {{ color: {MUTED}; }}
+      .stTabs [data-baseweb="tab"] p {{ font-size: 1.05rem !important; font-weight: 600; }}
       .bigtitle {{ font-size:2.1rem; font-weight:700; color:{INK}; line-height:1.15;
                    letter-spacing:-0.02em; margin:0.1rem 0 0.6rem 0; }}
       h1, h2, h3 {{ color: {INK}; letter-spacing: -0.01em; }}
