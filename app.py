@@ -35,8 +35,11 @@ st.markdown(
       [data-testid="stDataFrame"] thead th {{ background:#EEF3F9 !important; font-weight:600; }}
       .stTabs [data-baseweb="tab-list"] {{ gap: 1.5rem; }}
       .stTabs [data-baseweb="tab"] {{ color: {MUTED}; }}
-      .stTabs [data-baseweb="tab"] p {{ font-size: 1.05rem !important; font-weight: 600; }}
-      .stTabs [aria-selected="true"] p {{ color: {INK} !important; }}
+      .stTabs [data-baseweb="tab"] {{ font-size: 1.15rem !important; }}
+      .stTabs [data-baseweb="tab"] * {{ font-size: 1.15rem !important; font-weight: 600 !important; }}
+      .stTabs button p, .stTabs button div, .stTabs button span,
+      .stTabs button label, .stTabs button {{ font-size: 1.15rem !important; }}
+      .stTabs [aria-selected="true"], .stTabs [aria-selected="true"] * {{ color: {INK} !important; }}
       .bigtitle {{ font-size:2.1rem; font-weight:700; color:{INK}; line-height:1.15;
                    letter-spacing:-0.02em; margin:0.1rem 0 0.6rem 0; }}
       h1, h2, h3 {{ color: {INK}; letter-spacing: -0.01em; }}
@@ -608,24 +611,20 @@ with tab4:
 
     st.markdown(
         """
-**1 · Collect** — Scrapers pull public reviews and comments from the Google Play Store
-(AJIO, Myntra) and from YouTube comment threads on haul, review and try-on videos.
-No AI at this stage.
+**1 · Collect** — Scraped Play Store reviews for AJIO and Myntra, and comments under YouTube
+haul videos. No AI at this stage.
 
-**2 · Read and code** — Every item goes to a model in batches with one prompt built from the
-taxonomy file. Only about 8% are consideration-stage; the rest are delivery and refund complaints. The model answers the same fixed set of questions about each item: is this
-someone hesitating before a purchase, and if so what is blocking them, what did they do about
-it, was it real intent, how did it resolve, and who are they. Every answer comes from a closed
-list, which is what makes the results countable.
+**2 · Filter** — A model reads each one and answers: is this someone hesitating *before* buying?
+Only 8% were. The rest are delivery and refund complaints.
 
-**3 · Discover** — Items the model cannot classify are collected in an `other` bucket and
-reviewed for themes the taxonomy missed. This is how the findability blocker was found. New
-codes are added and the whole corpus is re-run so that misfiled items are recovered.
+**3 · Code** — Every surviving item gets tagged against a fixed list of reasons. The same list,
+every time. Anything it cannot place goes in an `other` bucket, which I read — that is how the
+findability blocker was found, and why the whole corpus was run again.
 
-**4 · Count and rank** — Results are cross-cut by segment, source and severity, and opportunity
-areas are scored on share, severity and whether they can be solved without monetary incentives.
+**4 · Count** — Now I can rank. Which reason is biggest, and does fixing it need money.
 
-**5 · Serve** — This app, including the live classifier on the second tab.
+**5 · Serve** — This app: the findings, the coded evidence behind every number, and a box where
+anyone can paste a review and watch it get tagged.
         """
     )
 
